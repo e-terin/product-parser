@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  php-cli:
+    build: ./images/php-cli
+    volumes:
+      - ./application:/app
+    user: ${USER_ID}:${GROUP_ID}
+    container_name: product-parser-php-cli
+#    networks:
+#      internal:
+#        ipv4_address: 192.168.118.10
+#    environment:
+#      XDEBUG_CONFIG: "client_host=172.18.0.2 start"
+#      PHP_IDE_CONFIG: "serverName=Docker"
+
+#networks:
+#  internal:
+#    driver: bridge
+#    ipam:
+#      driver: default
+#      config:
+#        - subnet: 192.168.118.0/28

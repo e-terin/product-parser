@@ -1,0 +1,10 @@
+name: scenario001
+desc: Take first picture, add second picture and save it
+settings:
+  output_service: Storeland
+  output_format: csv
+process:
+  ParseToProduct:
+    from: Storeland
+    format: csv
+    category: Paint
