@@ -12,7 +12,11 @@ abstract class AbstractProductConverter
     public function __construct(ProductCollection $products)
     {
         $this->input = $products;
-        $this->output = new ProductCollection();
+    }
+
+    public function getResult()
+    {
+        return $this->output;
     }
 
     abstract public function convert();

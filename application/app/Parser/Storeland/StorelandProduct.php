@@ -32,6 +32,9 @@ class StorelandProduct extends AbstractParser
         $category = $this->settings['category'] ?? null;
         if ($category){
             $converter = ConverterFactory::build($this->settings['from'], $this->settings['category'] , $this->output);
+            $this->output = $converter
+                ->convert()
+                ->getResult();
         }
         return $this;
     }

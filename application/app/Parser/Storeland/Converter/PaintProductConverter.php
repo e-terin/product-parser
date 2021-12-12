@@ -2,33 +2,43 @@
 
 namespace App\Parser\Storeland\Converter;
 
+use App\DataProvider\MarkiDataProvider;
+use App\Domain\Product;
 use App\Parser\AbstractProductConverter;
 
 class PaintProductConverter extends AbstractProductConverter
 {
-    protected string $brand_car;
-    protected string $paint_number;
 
     public function convert()
     {
         // TODO: Implement convert() method.
+        $this->output = clone $this->input;
+        $this->output->map(function($id, $product) {
+
+            $brand_car = $this->findBrandCar($product);
+            if ($brand_car){
+                $product->addAttribute('brand_car', $brand_car);
+            }
+            return true; });
+        return $this;
     }
 
     /**
      * Ищем марку краски в названии
      * @return string
      */
-    private function findBrandCar(): string
+    private function findBrandCar(Product $product): string
     {
-        foreach (Marki::MARKI as $brand) {
-            if (strpos($this->name, 'на '.$brand)) {
-                return $brand;
+        foreach (MarkiDataProvider::MARKI as $brand_car) {
+            if (strpos($product->name, 'на '.$brand_car)) {
+                return $brand_car;
             }
         }
 
         return '';
     }
 
+    // TODO: сделать когда будем делать подкраски
     private function findPaintNumber(): string
     {
         // если определено свойство - берем из него

@@ -2,7 +2,7 @@
 
 namespace App\Domain;
 
-use App\DataProvider\Marki;
+use App\DataProvider\MarkiDataProvider;
 
 class PaintProduct extends Product
 {
@@ -23,7 +23,7 @@ class PaintProduct extends Product
 	 */
 	private function findBrandCar(): string
 	{
-		foreach (Marki::MARKI as $brand) {
+		foreach (MarkiDataProvider::MARKI as $brand) {
 			if (strpos($this->name, 'на '.$brand)) {
 				return $brand;
 			}
