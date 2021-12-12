@@ -14,6 +14,6 @@ class ParseToProduct extends AbstractProcessor
         $this->settings['input_dir'] = $_ENV['DIR_WORK'] . 'in/' . $this->settings['category'] . '/';
 
         $parser = ParserFactory::build($from, $to, $this->settings);
-        return $parser->parse()->getResult();
+        $this->output = $parser->parse()->getResult();
     }
 }

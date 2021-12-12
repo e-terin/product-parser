@@ -43,7 +43,7 @@ class RunCommand extends Command
                     $process_name,
                     $process_settings,
                     $scenario['settings'],
-                    $this->output);
+                    $this->output); // результат работы предыдущего процессора отправляем в input следующего
                 $processor->process();
             } catch (\Exception $e) {
                 $output->writeln('Error: ' . $e->getMessage());

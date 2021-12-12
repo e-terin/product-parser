@@ -20,4 +20,9 @@ abstract class AbstractCollection
 
         throw new \InvalidArgumentException('Method ' . $name . ' is not exist in class ' . get_class($this->collection));
     }
+
+    public function getCollection()
+    {
+        return  $this->collection;
+    }
 }
