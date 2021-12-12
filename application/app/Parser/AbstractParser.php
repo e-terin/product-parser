@@ -2,6 +2,9 @@
 
 namespace App\Parser;
 
+/**
+ * Парсер берет данные из input и используя settings помещает их в output
+ */
 abstract class AbstractParser
 {
     protected mixed $input             = null;
@@ -19,6 +22,6 @@ abstract class AbstractParser
         return $this->output;
     }
 
-    abstract public function process(): array;
+    abstract public function parse(): AbstractParser;
 
 }

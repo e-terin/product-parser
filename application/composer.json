@@ -4,7 +4,9 @@
     "type": "project",
     "require": {
         "symfony/console": "^6.0",
-        "symfony/yaml": "^6.0"
+        "symfony/yaml": "^6.0",
+        "league/csv": "^9.7",
+        "php-ds/php-ds": "^1.4"
     },
     "license": "MIT",
     "autoload": {

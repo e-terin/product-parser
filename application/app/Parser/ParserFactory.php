@@ -6,7 +6,7 @@ class ParserFactory
 {
     public static function build(string $from, string $to, mixed $settings)
     {
-        $parser = '\\App\Parser\\' . ucfirst($from) . ucfirst($to);
+        $parser = '\\App\Parser\\' . ucfirst($from) . '\\' . ucfirst($from) . ucfirst($to);
 
         if (class_exists($parser)) {
             return new $parser($settings);

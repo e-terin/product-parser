@@ -2,6 +2,7 @@
 
 namespace App\Domain;
 
+// todo класс заточен только под стореленд! Вынести в абстракцию!
 class Product
 {
 	protected string $name;
@@ -14,6 +15,11 @@ class Product
 	protected string $url;
 	protected array  $properties;
 	protected array  $modification;
+    /**
+     * Аттрибуты специфичны для каждой категории товаров
+     * @var array
+     */
+    protected array $attributes;
 
 	// список полей, которые берутся прямо из файла без обработки
 	public const PARAM_NAME = [
@@ -101,6 +107,12 @@ class Product
 
         $this->modification[] = $modification;
 	}
+
+    public function addAttribute($name,$value){
+        $this->attributes[$name] = $value;
+    }
+
+
 
 	public function __get($property)
 	{

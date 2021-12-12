@@ -8,3 +8,4 @@ process:
     from: Storeland
     format: csv
     category: Paint
+    modification: true

@@ -2,6 +2,7 @@
 
 namespace App\DataProvider;
 
+use JetBrains\PhpStorm\ArrayShape;
 use League\Csv\Exception;
 use League\Csv\Reader;
 use League\Csv\Writer;
@@ -17,7 +18,7 @@ class FilesDataProvider
 
     public function __construct($dir)
     {
-        if (!is_dir(strtolower($dir))) {
+        if (!is_dir($dir)) {
             throw new \InvalidArgumentException('Directory ' . $dir . ' not exist!');
         }
         $this->dir = $dir;
@@ -31,35 +32,29 @@ class FilesDataProvider
 		return glob($this->dir. '*.csv') ?? [];
 	}
 
-	/**
-	 * Читает csv-файл и возвращает массив содержащий заголовок и строки
-	 *
-	 * @param string $filename
-	 * @return array
-	 */
-	public function getCsvFile(string $filename): array
+    /**
+     * Читает csv-файл и возвращает массив содержащий заголовок и строки
+     *
+     * @param string $filename
+     * @return array
+     * @throws Exception
+     */
+	#[ArrayShape(['header' => "string[]", 'rows' => "\Iterator"])]
+    public function getCsvFile(string $filename): array
 	{
+        $csv = Reader::createFromPath($filename, 'r');
+        $csv->setHeaderOffset(0);
+        $csv->setDelimiter(';');
+        $csv->setOutputBOM(Reader::BOM_UTF8);
+        //let's convert the incoming data from iso-88959-15 to utf-8
+        $csv->addStreamFilter('convert.iconv.WINDOWS-1251/UTF-8');
 
-		try {
-
-			$csv = Reader::createFromPath($filename, 'r');
-			$csv->setHeaderOffset(0);
-			$csv->setDelimiter(';');
-			$csv->setOutputBOM(Reader::BOM_UTF8);
-			//let's convert the incoming data from iso-88959-15 to utf-8
-			$csv->addStreamFilter('convert.iconv.WINDOWS-1251/UTF-8');
-
-			$header = $csv->getHeader(); //returns the CSV header record
-			$records = $csv->getRecords(); //returns all the CSV records as an Iterator object
-
-		} catch (Exception $e) {
-			echo 'Не удалось прочитать csv-файл ' . $filename;
-			exit;
-		}
+        $header = $csv->getHeader(); //returns the CSV header record
+        $records = $csv->getRecords(); //returns all the CSV records as an Iterator object
 
 		return [
 			'header'  => $header,
-			'records' => $records,
+			'rows' => $records,
 		];
 	}
 
