@@ -62,7 +62,6 @@ class StorelandProduct extends AbstractParser
         foreach ($csv_files as $csv_file) {
             $counter_files++;
             // TODO: remake stdout to output object
-            echo ('______________________________') . PHP_EOL;
             echo('Начинаю обрабатывать файл '
                  . $counter_files
                  . ' из '

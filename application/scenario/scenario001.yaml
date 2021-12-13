@@ -7,27 +7,71 @@ settings:
   category: Paint
   test: true
 process:
-  ParseToProduct:
-    from: Storeland
-    format: csv
-    category: Paint
-    modification: true
-  CheckImageQty:
-    check: true
-  MergeImage:
-    output:
-      width: 750
-      height: 750
-      format: jpg
-    img1:
-      name: 05.png
-      reduce: 0.5
-      offsetX: 60
-      offsetY: 300
-      rotate: 0
-    img2:
-      number: 2
-      reduce: 0.5
-      offsetX: 500
-      offsetY: 300
-      rotate: 90
+  -
+    name: ParseToProduct
+    settings:
+      from: Storeland
+      format: csv
+      category: Paint
+      modification: true
+
+  -
+    name: CheckImageQty
+
+  -
+    name: MergeImage
+    settings:
+      output:
+        width: 750
+        height: 750
+        format: jpg
+      img1:
+        name: 05.png
+        reduce: 0.5
+        offsetX: 60
+        offsetY: 200
+        rotate: 0
+      img2:
+        number: 2
+        reduce: 0.5
+        offsetX: 500
+        offsetY: 200
+        rotate: 90
+  -
+    name: MergeImage
+    settings:
+      output:
+        width: 750
+        height: 750
+        format: jpg
+      img1:
+        name: 10.png
+        reduce: 0.7
+        offsetX: 60
+        offsetY: 150
+        rotate: 0
+      img2:
+        number: 2
+        reduce: 0.5
+        offsetX: 500
+        offsetY: 300
+        rotate: 90
+  -
+    name: MergeImage
+    settings:
+      output:
+        width: 750
+        height: 750
+        format: jpg
+      img1:
+        name: 30.png
+        reduce: 0.7
+        offsetX: 60
+        offsetY: 150
+        rotate: 0
+      img2:
+        number: 2
+        reduce: 0.5
+        offsetX: 500
+        offsetY: 300
+        rotate: 90

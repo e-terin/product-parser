@@ -73,14 +73,22 @@ class MergeImage extends AbstractProcessor
             );
 
             // todo check directory
-            $output_image_name =
+            $output_image_dir =
                 $_ENV['DIR_WORK']
                 . 'out/'
                 . $this->scenario_settings['category']
                 . '/'
-                . $product_id
-                . '.'
-                . self::OUTPUT_FORMAT;
+                . $this->settings['img1']['name']
+                . '/';
+
+            if (!is_dir($output_image_dir) && !mkdir($output_image_dir) && !is_dir($output_image_dir)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $output_image_dir));
+            }
+
+            $output_image_name = $output_image_dir
+                 . $product_id
+                 . '.'
+                 . self::OUTPUT_FORMAT;
             $img->writeImage($output_image_name);
 
             if ($this->scenario_settings['test']) {

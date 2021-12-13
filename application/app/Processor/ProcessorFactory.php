@@ -4,7 +4,7 @@ namespace App\Processor;
 
 class ProcessorFactory
 {
-    public static function build(string $name, array $settings, array $scenario_settings, mixed $params)
+    public static function build(string $name, ?array $settings, array $scenario_settings, mixed $params)
     {
         $processor = '\\App\\Processor\\' . ucfirst($name);
 

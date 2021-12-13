@@ -3,6 +3,7 @@
 namespace App\Command;
 
 use App\Processor\ProcessorFactory;
+use http\Exception\RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -35,7 +36,27 @@ class RunCommand extends Command
         $scenario_filename = $_ENV['DIR_SCENARIO'] . $input->getOption('scenario') . '.yaml';
         $scenario = Yaml::parseFile($scenario_filename);
 
-        foreach ($scenario['process'] as $process_name => $process_settings){
+        $scenario_name = $scenario['name'];
+
+        $output->writeln("Scenario {$scenario_name} start");
+        $output->writeln('______________________');
+
+        $count_process = count($scenario['process']);
+        $counter_process = 0;
+
+        foreach ($scenario['process'] as $process){
+
+            $process_name = $process['name'] ?? null;
+
+            if(!$process_name){
+                throw new RuntimeException('Attribute \"name"\ is required in process scenario');
+            }
+
+            $process_settings = $process['settings'] ?? null;
+
+            $counter_process++;
+
+            $output->writeln("Start {$counter_process}/{$count_process } process: {$process_name}");
 
             try {
                 // TODO make transmit only processor settings
@@ -51,10 +72,12 @@ class RunCommand extends Command
             }
 
             $this->output = $processor->getResult();
+            $output->writeln("Process {$process_name} has been completed successfully");
+            $output->writeln('______________________');
 
         }
 
-        $output->writeln('Работу завершил');
+        $output->writeln("Scenario {$scenario_name} end successful");
 
         return 0;
     }
