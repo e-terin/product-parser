@@ -56,8 +56,15 @@ class RunCommand extends Command
 
             $counter_process++;
 
-            $output->writeln("Start {$counter_process}/{$count_process } process: {$process_name}");
+            $skip_process = $process['skip'] ?? false;
 
+            if ($skip_process) {
+                $output->writeln("Skip {$counter_process}/{$count_process } process: {$process_name}");
+                $output->writeln('______________________');
+                continue;
+            }
+
+            $output->writeln("Start {$counter_process}/{$count_process } process: {$process_name}");
             try {
                 // TODO make transmit only processor settings
                 $processor = ProcessorFactory::build(

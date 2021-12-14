@@ -5,7 +5,7 @@ settings:
   output_format: csv
   # категорию пока вынес сюда, т.к. она нужна для директориии
   category: Paint
-  test: true
+  test: false
 process:
   -
     name: ParseToProduct
@@ -20,6 +20,7 @@ process:
 
   -
     name: MergeImage
+    skip: true
     settings:
       output:
         width: 750
@@ -39,6 +40,7 @@ process:
         rotate: 90
   -
     name: MergeImage
+    skip: true
     settings:
       output:
         width: 750
@@ -58,6 +60,7 @@ process:
         rotate: 90
   -
     name: MergeImage
+    skip: true
     settings:
       output:
         width: 750
