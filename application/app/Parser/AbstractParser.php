@@ -7,14 +7,15 @@ namespace App\Parser;
  */
 abstract class AbstractParser
 {
-    protected mixed $input             = null;
+    //protected mixed $input             = null;
     protected mixed $output            = null;
     protected mixed $settings          = null;
     protected mixed $params            = null;
 
-    public function __construct($settings)
+    public function __construct($settings, $params = null)
     {
         $this->settings = $settings;
+        $this->params = $params;
     }
 
     public function getResult()

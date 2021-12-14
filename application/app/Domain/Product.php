@@ -13,8 +13,8 @@ class Product
 	protected string $stock;
 	protected array  $images;
 	protected string $url;
-	protected array  $properties;
-	protected array  $modification;
+	protected array $properties;
+	protected array $modifications;
     /**
      * Аттрибуты специфичны для каждой категории товаров
      * @var array
@@ -102,14 +102,23 @@ class Product
         $modification = [
             'desc' => $row['Описание модификации товара'],
             'image' => $row['Изображение модификации товара'],
+            'price' => $row['Цена продажи, без учёта скидок'],
             'properties' => $properties,
         ];
 
-        $this->modification[] = $modification;
+        $this->modifications[] = $modification;
 	}
 
-    public function addAttribute($name,$value){
+    public function addAttribute($name,$value): void
+    {
         $this->attributes[$name] = $value;
+    }
+
+    public function replaceImage($number, $value): void
+    {
+        if (isset($this->images[$number])) {
+            $this->images[$number] = $value;
+        }
     }
 
 

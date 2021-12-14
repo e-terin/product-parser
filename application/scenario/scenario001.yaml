@@ -17,6 +17,7 @@ process:
 
   -
     name: CheckImageQty
+    skip: true
 
   -
     name: MergeImage
@@ -58,23 +59,36 @@ process:
         offsetX: 500
         offsetY: 300
         rotate: 90
+#  -
+#    name: MergeImage
+#    skip: true
+#    settings:
+#      output:
+#        width: 750
+#        height: 750
+#        format: jpg
+#      img1:
+#        name: 30.png
+#        reduce: 0.7
+#        offsetX: 60
+#        offsetY: 150
+#        rotate: 0
+#      img2:
+#        number: 2
+#        reduce: 0.5
+#        offsetX: 500
+#        offsetY: 300
+#        rotate: 90
   -
-    name: MergeImage
+    name: ReplaceImage
     skip: true
     settings:
-      output:
-        width: 750
-        height: 750
-        format: jpg
-      img1:
-        name: 30.png
-        reduce: 0.7
-        offsetX: 60
-        offsetY: 150
-        rotate: 0
-      img2:
-        number: 2
-        reduce: 0.5
-        offsetX: 500
-        offsetY: 300
-        rotate: 90
+      0: https://profkolor.derin.ru/RAL/banki/05.png/{id}.jpg
+      1: https://profkolor.derin.ru/RAL/banki/10.png/{id}.jpg
+
+  -
+    name: ProductToFile
+    settings:
+      to: Storeland
+      format: csv
+      modification: true
