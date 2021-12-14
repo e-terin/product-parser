@@ -83,8 +83,8 @@ process:
     name: ReplaceImage
     skip: true
     settings:
-      0: https://profkolor.derin.ru/RAL/banki/05.png/{id}.jpg
-      1: https://profkolor.derin.ru/RAL/banki/10.png/{id}.jpg
+      0: https://profkolor.derin.ru/img/banki/RAL/05.png/{id}.jpg
+      1: https://profkolor.derin.ru/img/banki/RAL/10.png/{id}.jpg
 
   -
     name: ProductToFile
