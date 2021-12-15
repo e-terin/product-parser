@@ -32,7 +32,13 @@ class ProductStoreland extends AbstractParser
 
         $products = $this->params->getCollection();
 
-        $row[] = [
+        if ($products->isEmpty()) {
+            throw new RuntimeException('Products is empty');
+        }
+
+        $rows = [];
+
+        $rows[] = [
             'Название товара',
             'Артикул',
             'Цена продажи, без учёта скидок',
@@ -54,11 +60,13 @@ class ProductStoreland extends AbstractParser
             foreach ($modifications as $modification){
                 // у каждой модификации есть свой-ва
                 $properties_vector = [];
+
                 foreach ($modification['properties'] as $property) {
-                    $properties_vector = array_merge($properties_vector, [ $property['name'], $property['value'] ]);
+                    $properties_vector [] = $property['name'];
+                    $properties_vector [] = $property['value'];
                 }
 
-                $row[] = array_merge(
+                $rows[] = array_merge(
                 [
                     $product->name, //Название товара
                     $product->code, //Артикул
@@ -72,12 +80,20 @@ class ProductStoreland extends AbstractParser
                 $properties_vector);
             }
 
-            // add column to header
-            $count_modification_property_pair = count($properties_vector)/2;
-            for ($i = 1; $i <= $count_modification_property_pair; $i++) {
-                // todo
-            }
         }
+
+        // add column to header
+        $count_modification_property_pair = count($properties_vector)/2;
+        $characteristic_vector = [];
+        for ($i = 1; $i <= $count_modification_property_pair; $i++) {
+            // todo
+            $characteristic_vector[] = 'Название х-ки товара №' . $i;
+            $characteristic_vector[] = 'Значение х-ки товара №' . $i;
+        }
+        $rows[0] = array_merge($rows[0],$characteristic_vector);
+
+        $filename = $this->settings['to'] . '.' . $this->settings['format'];
+        (new FilesDataProvider($this->settings['output_dir']))->saveArrayToCsv($rows, $filename);
 
         return $this;
     }

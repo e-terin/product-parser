@@ -145,10 +145,9 @@ class FilesDataProvider
 			return false;
 		}
 
-		$dir = $_ENV['DIR_DOWNLOAD'].'/' . $this->delaem.'/';
-		self::checkDir($dir);
+		self::checkDir($this->dir);
 
-		$file =  $dir. $filename;
+		$file =  $this->dir. $filename;
 		$writer = Writer::createFromPath($file, 'w+');
 		$writer->setDelimiter(';');
 		$writer->insertAll($array); //using an array

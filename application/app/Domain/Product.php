@@ -121,6 +121,13 @@ class Product
         }
     }
 
+    public function replaceModificationImage($number, $value): void
+    {
+        if (isset($this->modifications[$number])) {
+            $this->modifications[$number]['image'] = $value;
+        }
+    }
+
 
 
 	public function __get($property)

@@ -59,29 +59,12 @@ process:
         offsetX: 500
         offsetY: 300
         rotate: 90
-#  -
-#    name: MergeImage
-#    skip: true
-#    settings:
-#      output:
-#        width: 750
-#        height: 750
-#        format: jpg
-#      img1:
-#        name: 30.png
-#        reduce: 0.7
-#        offsetX: 60
-#        offsetY: 150
-#        rotate: 0
-#      img2:
-#        number: 2
-#        reduce: 0.5
-#        offsetX: 500
-#        offsetY: 300
-#        rotate: 90
+  - name: ReplaceModificationImage
+    settings:
+      4: https://profkolor.derin.ru/img/banki/RAL/05.png/{id}.jpg
+      8: https://profkolor.derin.ru/img/banki/RAL/10.png/{id}.jpg
   -
     name: ReplaceImage
-    skip: true
     settings:
       0: https://profkolor.derin.ru/img/banki/RAL/05.png/{id}.jpg
       1: https://profkolor.derin.ru/img/banki/RAL/10.png/{id}.jpg
