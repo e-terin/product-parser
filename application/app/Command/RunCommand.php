@@ -3,7 +3,6 @@
 namespace App\Command;
 
 use App\Processor\ProcessorFactory;
-use http\Exception\RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -49,7 +48,7 @@ class RunCommand extends Command
             $process_name = $process['name'] ?? null;
 
             if(!$process_name){
-                throw new RuntimeException('Attribute \"name"\ is required in process scenario');
+                throw new \RuntimeException('Attribute \"name"\ is required in process scenario');
             }
 
             $process_settings = $process['settings'] ?? null;
