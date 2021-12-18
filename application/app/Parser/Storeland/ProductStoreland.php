@@ -87,8 +87,8 @@ class ProductStoreland extends AbstractParser
         $characteristic_vector = [];
         for ($i = 1; $i <= $count_modification_property_pair; $i++) {
             // todo
-            $characteristic_vector[] = 'Название х-ки товара №' . $i;
-            $characteristic_vector[] = 'Значение х-ки товара №' . $i;
+            $characteristic_vector[] = 'Название св-ва для модификации товара №' . $i;
+            $characteristic_vector[] = 'Значение св-ва для модификации товара №' . $i;
         }
         $rows[0] = array_merge($rows[0],$characteristic_vector);
 
