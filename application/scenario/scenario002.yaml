@@ -5,7 +5,7 @@ settings:
   output_format: csv
   # категорию пока вынес сюда, т.к. она нужна для директориии
   category: Paint
-  test: true
+  #test: true
 process:
   -
     name: ParseToProduct
@@ -28,7 +28,7 @@ process:
         height: 800
         format: jpg
       img1:
-        name: ral.png
+        name: podkraski-ral.png
         reduce: 0.9
         offsetX: -100
         offsetY: 40
@@ -41,13 +41,13 @@ process:
         rotate: 0
   -
     name: ReplaceImage
-    skip: true
+    #skip: true
     settings:
-      0: https://profkolor.derin.ru/img/podkraski/RAL/{id}.jpg
+      0: https://profkolor.derin.ru/img/podkraski/rest/{id}.jpg
 
   -
     name: ProductToFile
-    skip: true
+    #skip: true
     settings:
       to: Storeland
       format: csv

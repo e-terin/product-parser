@@ -91,7 +91,7 @@ class MergeImage extends AbstractProcessor
                  . self::OUTPUT_FORMAT;
             $img->writeImage($output_image_name);
 
-            if ($this->scenario_settings['test']) {
+            if ($this->scenario_settings['test'] ?? false) {
                 break;
             }
         }
