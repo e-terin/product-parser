@@ -8,6 +8,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Yaml\Yaml;
+use Symfony\Component\Dotenv\Dotenv;
 
 class RunCommand extends Command
 {
@@ -28,14 +29,20 @@ class RunCommand extends Command
                 'Scenario',
                 'default'
             );
+
+        $dotenv = new Dotenv();
+        $dotenv->load($_ENV['DIR_BASE'].'/.env');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $scenario_filename = $_ENV['DIR_SCENARIO'] . $input->getOption('scenario') . '.yaml';
+        $scenario_filename = $_ENV['DIR_BASE'] . $_ENV['DIR_SCENARIO'] . $input->getOption('scenario') . '.yaml';
         $scenario = Yaml::parseFile($scenario_filename);
 
         $scenario_name = $scenario['name'];
+
+        $scenario['settings']['dir_in'] = $_ENV['DIR_BASE'] . $_ENV['DIR_WORK'] . 'in/';
+        $scenario['settings']['dir_out'] = $_ENV['DIR_BASE'] . $_ENV['DIR_WORK'] . 'out/';
 
         $output->writeln("Scenario {$scenario_name} start");
         $output->writeln('______________________');
@@ -47,7 +54,7 @@ class RunCommand extends Command
 
             $process_name = $process['name'] ?? null;
 
-            if(!$process_name){
+            if (!$process_name) {
                 throw new \RuntimeException('Attribute \"name"\ is required in process scenario');
             }
 

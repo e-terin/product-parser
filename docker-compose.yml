@@ -3,7 +3,7 @@ services:
   php-cli:
     build: ./images/php-cli
     volumes:
-      - ./application:/app
+      - ./application:/application
     user: ${USER_ID}:${GROUP_ID}
     container_name: product-parser-php-cli
 #    networks:

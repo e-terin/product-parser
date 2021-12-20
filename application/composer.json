@@ -6,7 +6,8 @@
         "symfony/console": "^6.0",
         "symfony/yaml": "^6.0",
         "league/csv": "^9.7",
-        "php-ds/php-ds": "^1.4"
+        "php-ds/php-ds": "^1.4",
+        "symfony/dotenv": "^6.0"
     },
     "license": "MIT",
     "autoload": {

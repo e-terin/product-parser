@@ -3,7 +3,7 @@
 namespace App\Processor;
 
 /**
- * Проверяет кол-во картинок в коллекции Product
+ * Заменяет картинки модификаций
  */
 class ReplaceModificationImage extends AbstractProcessor
 {
@@ -12,10 +12,11 @@ class ReplaceModificationImage extends AbstractProcessor
         $this->output = $this->params;
         $settings = $this->settings;
 
+        // todo сделать проверку на сущ $_ENV['SOURCE_URL']
         $this->output->map(function ($id, $product) use ($settings) {
             // change template to real product id in
             $new_images = array_map(function ($image_template) use ($product) {
-                $a = str_replace('{id}', $product->id, $image_template); // todo: переделать на парсинг всех свойств
+                $a = $_ENV['SOURCE_URL'] . str_replace('{id}', $product->id, $image_template); // todo: переделать на парсинг всех свойств
                 return ($a);
             }, $settings);
 

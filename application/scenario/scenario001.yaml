@@ -17,11 +17,11 @@ process:
 
   -
     name: CheckImageQty
-    #skip: true
+    skip: true
 
   -
     name: MergeImage
-    #skip: true
+    skip: true
     settings:
       output:
         width: 750
@@ -41,7 +41,7 @@ process:
         rotate: 90
   -
     name: MergeImage
-    #skip: true
+    skip: true
     settings:
       output:
         width: 750
@@ -61,13 +61,13 @@ process:
         rotate: 90
   - name: ReplaceModificationImage
     settings:
-      4: https://profkolor.derin.ru/img/banki/RAL/05.png/{id}.jpg
-      8: https://profkolor.derin.ru/img/banki/RAL/10.png/{id}.jpg
+      4: img/banki/RAL/05.png/{id}.jpg
+      8: img/banki/RAL/10.png/{id}.jpg
   -
     name: ReplaceImage
     settings:
-      0: https://profkolor.derin.ru/img/banki/RAL/05.png/{id}.jpg
-      1: https://profkolor.derin.ru/img/banki/RAL/10.png/{id}.jpg
+      0: img/banki/RAL/05.png/{id}.jpg
+      1: img/banki/RAL/10.png/{id}.jpg
 
   -
     name: ProductToFile
