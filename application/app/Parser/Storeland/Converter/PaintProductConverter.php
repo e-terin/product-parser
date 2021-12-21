@@ -19,6 +19,11 @@ class PaintProductConverter extends AbstractProductConverter
             if ($brand_car){
                 $product->addAttribute('brand_car', $brand_car);
             }
+
+            $paint_code = $this->findPaintNumber($product);
+            if ($paint_code){
+                $product->addAttribute('paint_code', $paint_code);
+            }
             return true; });
         return $this;
     }
@@ -38,11 +43,11 @@ class PaintProductConverter extends AbstractProductConverter
         return '';
     }
 
-    // TODO: сделать когда будем делать подкраски
-    private function findPaintNumber(): string
+    private function findPaintNumber(Product $product): string
     {
         // если определено свойство - берем из него
-        if (isset($this->properties['Код краски по VIN номеру (заводскому коду краски)'])
+        // todo а где свойства то ? добавить!
+        if (isset($product->properties['Код краски по VIN номеру (заводскому коду краски)'])
             && !empty($this->properties['Код краски по VIN номеру (заводскому коду краски)'])){
             return $this->properties['Код краски по VIN номеру (заводскому коду краски)'];
         }

@@ -1,0 +1,54 @@
+name: scenario003
+desc: Замена фото в аэрозолях
+settings:
+  output_service: Storeland
+  output_format: csv
+  # Категорию пока вынес сюда, т.к. она нужна для директории
+  category: Paint
+  #test: true
+process:
+  -
+    name: ParseToProduct
+    settings:
+      from: Storeland
+      format: csv
+      category: Paint
+      modification: true
+
+  -
+    name: CheckImageQty
+    skip: true
+
+  -
+    name: MergeImage
+    skip: true
+    settings:
+      output:
+        width: 800
+        height: 800
+        format: jpg
+      img1:
+        name: podkraski-ral.png
+        reduce: 0.9
+        offsetX: -100
+        offsetY: 40
+        rotate: 0
+      img2:
+        number: 2
+        reduce: 0.6
+        offsetX: 350
+        offsetY: 350
+        rotate: 0
+  -
+    name: ReplaceImage
+    skip: true
+    settings:
+      0: img/podkraski/rest/{id}.jpg
+
+  -
+    name: ProductToFile
+    skip: true
+    settings:
+      to: Storeland
+      format: csv
+      modification: true
