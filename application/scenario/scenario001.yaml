@@ -1,0 +1,77 @@
+name: scenario001
+desc: Take first picture, add second picture and save it
+settings:
+  output_service: Storeland
+  output_format: csv
+  # категорию пока вынес сюда, т.к. она нужна для директориии
+  category: Paint
+  test: false
+process:
+  -
+    name: ParseToProduct
+    settings:
+      from: Storeland
+      format: csv
+      category: Paint
+      modification: true
+
+  -
+    name: CheckImageQty
+    skip: true
+
+  -
+    name: MergeImage
+    skip: true
+    settings:
+      output:
+        width: 750
+        height: 750
+        format: jpg
+      img1:
+        name: 05.png
+        reduce: 0.5
+        offsetX: 60
+        offsetY: 200
+        rotate: 0
+      img2:
+        number: 2
+        reduce: 0.5
+        offsetX: 500
+        offsetY: 200
+        rotate: 90
+  -
+    name: MergeImage
+    skip: true
+    settings:
+      output:
+        width: 750
+        height: 750
+        format: jpg
+      img1:
+        name: 10.png
+        reduce: 0.7
+        offsetX: 60
+        offsetY: 150
+        rotate: 0
+      img2:
+        number: 2
+        reduce: 0.5
+        offsetX: 500
+        offsetY: 300
+        rotate: 90
+  - name: ReplaceModificationImage
+    settings:
+      4: img/banki/RAL/05.png/{id}.jpg
+      8: img/banki/RAL/10.png/{id}.jpg
+  -
+    name: ReplaceImage
+    settings:
+      0: img/banki/RAL/05.png/{id}.jpg
+      1: img/banki/RAL/10.png/{id}.jpg
+
+  -
+    name: ProductToFile
+    settings:
+      to: Storeland
+      format: csv
+      modification: true
