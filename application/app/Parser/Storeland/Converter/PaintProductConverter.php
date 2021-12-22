@@ -9,7 +9,7 @@ use App\Parser\AbstractProductConverter;
 class PaintProductConverter extends AbstractProductConverter
 {
 
-    public function convert()
+    public function convert(): PaintProductConverter
     {
         // TODO: Implement convert() method.
         $this->output = clone $this->input;
@@ -48,14 +48,14 @@ class PaintProductConverter extends AbstractProductConverter
         // если определено свойство - берем из него
         // todo а где свойства то ? добавить!
         if (isset($product->properties['Код краски по VIN номеру (заводскому коду краски)'])
-            && !empty($this->properties['Код краски по VIN номеру (заводскому коду краски)'])){
-            return $this->properties['Код краски по VIN номеру (заводскому коду краски)'];
+            && !empty($product->properties['Код краски по VIN номеру (заводскому коду краски)'])){
+            return $product->properties['Код краски по VIN номеру (заводскому коду краски)'];
         }
 
         // Если свой-ва нет - ищем в артикуле
         // Готовая краска в банках на Audi - AULZ5R
-        if (isset($this->code) 	&& !empty($this->code)){
-            $code_components = explode('-',$this->code);
+        if (isset($product->code) && !empty($product->code)){
+            $code_components = explode('-',$product->code);
 
             return
                 isset($code_components[1]) && !empty($code_components[1])
