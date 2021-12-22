@@ -7,46 +7,72 @@ settings:
   category: Paint
   #test: true
 process:
-  -
-    name: ParseToProduct
+
+  - name: ParseToProduct
     settings:
       from: Storeland
       format: csv
       category: Paint
       modification: true
 
-  -
-    name: CheckImageQty
-    skip: true
+  - name: CheckImageQty
+    #skip: true
 
-  -
-    name: MergeImage
-    skip: true
+  - name: MergeImage
+    #skip: true
     settings:
       output:
         width: 800
         height: 800
         format: jpg
       img1:
-        name: podkraski-ral.png
-        reduce: 0.9
+        name: 210.png
+        reduce: 1
         offsetX: -100
-        offsetY: 40
+        offsetY: 30
         rotate: 0
       img2:
-        number: 2
-        reduce: 0.6
-        offsetX: 350
+        number: 16
+        reduce: 0.5
+        offsetX: 550
         offsetY: 350
+        rotate: 90
+
+  - name: MergeImage
+    #skip: true
+    settings:
+      output:
+        width: 800
+        height: 800
+        format: jpg
+      img1:
+        name: 520.png
+        reduce: 1
+        offsetX: -100
+        offsetY: 0
         rotate: 0
-  -
-    name: ReplaceImage
+      img2:
+        number: 16
+        reduce: 0.5
+        offsetX: 550
+        offsetY: 350
+        rotate: 90
+
+  - name: ResizeImage
+    #skip: true
+    settings:
+      images: [16]
+      output:
+        width: 200
+        format: jpg
+
+
+  - name: ReplaceImage
     skip: true
     settings:
       0: img/podkraski/rest/{id}.jpg
 
-  -
-    name: ProductToFile
+  - name: ProductToFile
     skip: true
     settings:
       to: Storeland
