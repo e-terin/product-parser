@@ -19,7 +19,7 @@ process:
     #skip: true
 
   - name: MergeImage
-    #skip: true
+    skip: true
     settings:
       output:
         width: 800
@@ -39,7 +39,7 @@ process:
         rotate: 90
 
   - name: MergeImage
-    #skip: true
+    skip: true
     settings:
       output:
         width: 800
@@ -59,22 +59,30 @@ process:
         rotate: 90
 
   - name: ResizeImage
-    #skip: true
+    skip: true
     settings:
       images: [16]
       output:
-        width: 200
+        height: 200
         format: jpg
 
-
   - name: ReplaceImage
-    skip: true
+    #skip: true
     settings:
-      0: img/podkraski/rest/{id}.jpg
+      0: img/aerozol/210.png/{brand_car}/{id}.jpg
+      1: img/aerozol/520.png/{brand_car}/{id}.jpg
+      2: img/aerozol/color/{brand_car}/{id}.jpg
+
+  - name: DeleteImage
+    #skip: true
+    settings:
+      images: [3,4,5,6,7,8,9,10,11,12,13,14,15,16]
 
   - name: ProductToFile
-    skip: true
+    #skip: true
     settings:
       to: Storeland
       format: csv
       modification: true
+      clear_fields: ['Изображение модификации товара']
+      by_brand_car: true

@@ -15,15 +15,23 @@ class ReplaceImage extends AbstractProcessor
 
         $this->output->map(function($id, $product) use ($settings) {
 
+            if(!isset($product->id) || !isset($product->attributes['brand_car'])){
+                throw new \RuntimeException('Necessary properties of product is absent');
+            }
+
             // change template to real product id in
-            $new_images = array_map( function ($image_template) use ($product) {
-                $a = str_replace('{id}', $product->id, $image_template);
+            $new_images = array_map( static function ($image_template) use ($product) {
+                $a = str_replace(
+                    ['{id}', '{brand_car}'],
+                    [$product->id, $product->attributes['brand_car']],
+                    $image_template
+                );
                 return ($a);
             },  $settings);
 
             // replace image
             foreach ($new_images as $image_number => $image_value) {
-                $product->replaceImage($image_number, $image_value);
+                $product->replaceImage($image_number, $_ENV['SOURCE_URL'] . $image_value);
             }
 
             return true;

@@ -121,6 +121,16 @@ class Product
         }
     }
 
+    public function deleteImage($number): bool
+    {
+        if (isset($this->images[$number])) {
+            unset($this->images[$number]);
+            return true;
+        }
+
+        return false;
+    }
+
     public function replaceModificationImage($number, $value): void
     {
         if (isset($this->modifications[$number])) {

@@ -72,14 +72,17 @@ class MergeImage extends AbstractProcessor
                 $this->settings['img2']['offsetY']
             );
 
-            // todo check directory
-            $output_image_dir =
-                $_ENV['DIR_WORK']
-                . 'out/'
+            $output_image_dir = $this->scenario_settings['dir_out']
                 . $this->scenario_settings['category']
                 . '/'
                 . $this->settings['img1']['name']
                 . '/';
+
+            if (!is_dir($output_image_dir) && !mkdir($output_image_dir) && !is_dir($output_image_dir)) {
+                throw new \RuntimeException(sprintf('Directory "%s" was not created', $output_image_dir));
+            }
+
+            $output_image_dir .= $product->attributes['brand_car'] . '/' ?? '';
 
             if (!is_dir($output_image_dir) && !mkdir($output_image_dir) && !is_dir($output_image_dir)) {
                 throw new \RuntimeException(sprintf('Directory "%s" was not created', $output_image_dir));

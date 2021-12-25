@@ -22,24 +22,27 @@ class ResizeImage extends AbstractProcessor
         // TODO: check directory
 
         foreach ($products as $product_id=>$product){
-            foreach ($this->settings->images as $image){
-                $a= $image;
+            foreach ($this->settings['images'] as $image){
                 if (!empty($product->images[$image])) {
                     $img = new Imagick($product->images[$image]);
                     $width = $img->getImageWidth();
                     $height = $img->getImageHeight();
-                    $new_width = $this->settings['output']['width'];
-                    $new_height = $new_width  * $height / $width ;
+                    $new_height = $this->settings['output']['height'];
+                    $new_width = $new_height  * $width / $height;
                     $img->resizeImage($new_width, $new_height, Imagick::FILTER_UNDEFINED, 1, 1, 1);
                     $img->setImageFormat($this->settings['output']['format']);
 
-                    $output_image_dir =
-                        $_ENV['DIR_WORK']
-                        . 'out/'
+                    $output_image_dir = $this->scenario_settings['dir_out']
                         . $this->scenario_settings['category']
                         . '/'
                         . $image
                         . '/';
+
+                    if (!is_dir($output_image_dir) && !mkdir($output_image_dir) && !is_dir($output_image_dir)) {
+                        throw new \RuntimeException(sprintf('Directory "%s" was not created', $output_image_dir));
+                    }
+
+                    $output_image_dir .= $product->attributes['brand_car'] . '/' ?? '';
 
                     if (!is_dir($output_image_dir) && !mkdir($output_image_dir) && !is_dir($output_image_dir)) {
                         throw new \RuntimeException(sprintf('Directory "%s" was not created', $output_image_dir));

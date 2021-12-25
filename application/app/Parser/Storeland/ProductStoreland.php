@@ -92,9 +92,56 @@ class ProductStoreland extends AbstractParser
         }
         $rows[0] = array_merge($rows[0],$characteristic_vector);
 
-        $filename = $this->settings['to'] . '.' . $this->settings['format'];
-        (new FilesDataProvider($this->settings['output_dir']))->saveArrayToCsv($rows, $filename);
+        $rows = $this->clearFields($rows, $this->settings['clear_fields'] ?? null);
+
+        if ($this->settings['by_brand_car'] ?? false) {
+            // преобразуем в формат, который понимает функция
+        } else {
+            $filename = $this->settings['to'] . '.' . $this->settings['format'];
+            (new FilesDataProvider($this->settings['output_dir']))->saveArrayToCsv($rows, $filename);
+        }
+
 
         return $this;
+    }
+
+    /**
+     * Очищает указанные поля. Массив $rows должен обязательно содержать заголовок с названиями полей
+     * @param array $rows
+     * @param $clear_fields
+     * @return array
+     */
+    private function clearFields(array $rows, $clear_fields = null): array
+    {
+        if(!is_array($clear_fields) || empty($clear_fields)){
+            return $rows;
+        }
+
+        // find index to delete
+        $fields_to_clear_array = array_filter($rows[0], static function($column) use ($clear_fields){
+            return in_array($column, $clear_fields, true);
+        });
+
+        $fields_to_clear = array_keys($fields_to_clear_array);
+
+        $new_rows = [];
+        $is_header = true;
+        foreach ($rows as $row) {
+            if ($is_header) {
+                $is_header = false;
+                $new_rows[] = $row;
+                continue;
+            }
+
+            array_walk($row, static function (&$field, $index) use ($fields_to_clear) {
+                if(in_array($index, $fields_to_clear)){
+                    $field = '';
+                }
+            });
+
+            $new_rows[] = $row;
+        }
+
+        return $new_rows;
     }
 }
