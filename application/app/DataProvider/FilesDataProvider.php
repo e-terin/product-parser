@@ -63,7 +63,7 @@ class FilesDataProvider
 	 * @throws \League\Csv\CannotInsertRecord
 	 * @throws \League\Csv\InvalidArgument
 	 */
-	public function saveFileToCsvByMarka($new_files, $delaem)
+	public function saveFileToCsvByMarka($new_files)
 	{
 		$counter_file = 0;
 		foreach ($new_files as $marka=>$data_for_file)
@@ -77,7 +77,7 @@ class FilesDataProvider
 
 			$data = array_chunk($data_for_file['data'], $kolvo_strok_in_chank);
 
-			$dir = $_ENV['DIR_DOWNLOAD'] . $delaem . '/' . $marka . '/';
+			$dir = $this->dir;
 
 			if (!is_dir($dir) && !mkdir($dir, 0777, true) && !is_dir($dir))
 			{

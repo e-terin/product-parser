@@ -81,6 +81,7 @@ process:
   - name: ProductToFile
     #skip: true
     settings:
+      from: Paint
       to: Storeland
       format: csv
       modification: true
