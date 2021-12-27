@@ -23,7 +23,7 @@ class ReplaceImage extends AbstractProcessor
             $new_images = array_map( static function ($image_template) use ($product) {
                 $a = str_replace(
                     ['{id}', '{brand_car}'],
-                    [$product->id, $product->attributes['brand_car']],
+                    [$product->id, str_replace(' ', '%20', $product->attributes['brand_car'])],
                     $image_template
                 );
                 return ($a);
