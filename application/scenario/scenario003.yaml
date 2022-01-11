@@ -19,7 +19,7 @@ process:
     #skip: true
 
   - name: MergeImage
-    skip: true
+    #skip: true
     settings:
       output:
         width: 800
@@ -39,7 +39,7 @@ process:
         rotate: 90
 
   - name: MergeImage
-    skip: true
+    #skip: true
     settings:
       output:
         width: 800
@@ -59,7 +59,7 @@ process:
         rotate: 90
 
   - name: ResizeImage
-    skip: true
+    #skip: true
     settings:
       images: [16]
       output:

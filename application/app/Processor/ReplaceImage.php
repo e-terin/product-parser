@@ -16,7 +16,7 @@ class ReplaceImage extends AbstractProcessor
         $this->output->map(function($id, $product) use ($settings) {
 
             if(!isset($product->id) || !isset($product->attributes['brand_car'])){
-                throw new \RuntimeException('Necessary properties of product is absent');
+                //throw new \RuntimeException('Necessary properties of product is absent: product->id or brand_car');
             }
 
             // change template to real product id in
