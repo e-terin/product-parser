@@ -21,11 +21,23 @@ class ReplaceImage extends AbstractProcessor
 
             // change template to real product id in
             $new_images = array_map( static function ($image_template) use ($product) {
-                $a = str_replace(
-                    ['{id}', '{brand_car}'],
-                    [$product->id, str_replace(' ', '%20', $product->attributes['brand_car'])],
-                    $image_template
-                );
+
+                // todo very very bad
+                if(!empty($product->attributes['brand_car'])){
+                    $a = str_replace(
+                        ['{id}', '{brand_car}'],
+                        [$product->id, str_replace(' ', '%20', $product->attributes['brand_car'])],
+                        $image_template
+                    );
+                } else {
+                    $a = str_replace(
+                        '{id}',
+                        $product->id,
+                        $image_template
+                    );
+                }
+
+
                 return ($a);
             },  $settings);
 

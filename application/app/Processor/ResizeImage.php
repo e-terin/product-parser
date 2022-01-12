@@ -42,7 +42,9 @@ class ResizeImage extends AbstractProcessor
                         throw new \RuntimeException(sprintf('Directory "%s" was not created', $output_image_dir));
                     }
 
-                    $output_image_dir .= $product->attributes['brand_car'] . '/' ?? '';
+                    $output_image_dir .= !empty($product->attributes['brand_car'])
+                        ?   $product->attributes['brand_car'] . '/'
+                        : '';
 
                     if (!is_dir($output_image_dir) && !mkdir($output_image_dir) && !is_dir($output_image_dir)) {
                         throw new \RuntimeException(sprintf('Directory "%s" was not created', $output_image_dir));
