@@ -10,8 +10,8 @@ class ProductToFile extends AbstractProcessor
     {
         // TODO: Implement process() method.
         $to = $this->settings['to'];
-        $from  = 'Product';
-        $this->settings['output_dir'] = $_ENV['DIR_WORK'] . 'out/' . $this->scenario_settings['category'] . '/';
+        $from  = $this->settings['from'] ?? 'Product';
+        $this->settings['output_dir'] = $this->scenario_settings['dir_out'] . $this->scenario_settings['category'] . '/';
 
         $parser = ParserFactory::build($from, $to, $this->settings, $this->params);
         $this->output = $parser->parse()->getResult();

@@ -17,11 +17,11 @@ process:
 
   -
     name: CheckImageQty
-    skip: true
+    #skip: true
 
   -
     name: MergeImage
-    skip: true
+    #skip: true
     settings:
       output:
         width: 750
@@ -41,7 +41,7 @@ process:
         rotate: 90
   -
     name: MergeImage
-    skip: true
+    #skip: true
     settings:
       output:
         width: 750

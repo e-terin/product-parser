@@ -13,22 +13,18 @@ use RuntimeException;
 /**
  *
  */
-class ProductStoreland extends AbstractParser
+class PaintStoreland extends AbstractParser
 {
     private ProductCollection $products;
 
     /**
      * Парсим файл выгрузки Storeland в коллекцию Product и сохраняем ее в $this->output
      *
-     * @return array
+     * @return PaintStoreland
      * @throws Exception
      */
-    public function parse(): ProductStoreland
+    public function parse(): PaintStoreland
     {
-
-       // $this->output = $this->fillProducts();
-
-        //
 
         $products = $this->params->getCollection();
 
@@ -38,7 +34,7 @@ class ProductStoreland extends AbstractParser
 
         $rows = [];
 
-        $rows[] = [
+        $header = [
             'Название товара',
             'Артикул',
             'Цена продажи, без учёта скидок',
@@ -50,13 +46,18 @@ class ProductStoreland extends AbstractParser
         ];
 
         foreach ($products as $product_id => $product) {
+
+            if(empty($product->attributes['brand_car'])){
+                throw new \RuntimeException('Property brand car required in product #' . $product_id);
+            }
+
             $modifications = $product->modifications;
 
             // выстраиваем в ряд свойства модификаций (properties) проверяем их количество - хз надо или нет
             // считаем их
             // формируем заголовок
             $properties_vector = [];
-
+            $mod_qty = 0;
             foreach ($modifications as $modification){
                 // у каждой модификации есть свой-ва
                 $properties_vector = [];
@@ -66,7 +67,7 @@ class ProductStoreland extends AbstractParser
                     $properties_vector [] = $property['value'];
                 }
 
-                $rows[] = array_merge(
+                $rows[$product->attributes['brand_car']]['data'][] = array_merge(
                 [
                     $product->name, //Название товара
                     $product->code, //Артикул
@@ -78,6 +79,7 @@ class ProductStoreland extends AbstractParser
                     $modification['image'], // Изображение модификации товара
                 ],
                 $properties_vector);
+                $mod_qty++;
             }
 
         }
@@ -90,17 +92,16 @@ class ProductStoreland extends AbstractParser
             $characteristic_vector[] = 'Название св-ва для модификации товара №' . $i;
             $characteristic_vector[] = 'Значение св-ва для модификации товара №' . $i;
         }
-        $rows[0] = array_merge($rows[0],$characteristic_vector);
+        $header = array_merge($header,$characteristic_vector);
 
-        $rows = $this->clearFields($rows, $this->settings['clear_fields'] ?? null);
-
-        if ($this->settings['by_brand_car'] ?? false) {
-            // преобразуем в формат, который понимает функция
-        } else {
-            $filename = $this->settings['to'] . '.' . $this->settings['format'];
-            (new FilesDataProvider($this->settings['output_dir']))->saveArrayToCsv($rows, $filename);
+        foreach ($rows as $marka=>$data){
+            $rows[$marka]['header'] = $header;
+            $rows[$marka]['mod_qty'] = $mod_qty;
         }
 
+        //$rows = $this->clearFields($rows, $this->settings['clear_fields'] ?? null);
+
+        (new FilesDataProvider($this->settings['output_dir']))->saveFileToCsvByMarka($rows);
 
         return $this;
     }

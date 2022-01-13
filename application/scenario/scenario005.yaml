@@ -1,0 +1,70 @@
+name: scenario001
+desc: Замена фоток и описаний в Краска в банках по каталогу RAL
+
+settings:
+  output_service: Storeland
+  output_format: csv
+  # категорию пока вынес сюда, т.к. она нужна для директориии
+  category: Paint
+  test: false
+
+process:
+  - name: ParseToProduct
+    settings:
+      from: Storeland
+      format: csv
+      category: Paint
+      modification: true
+
+  - name: CheckImageQty
+    #skip: true
+
+  # формируем главную картинку
+  - name: MergeImage
+    #skip: true
+    settings:
+      output:
+        width: 800
+        height: 800
+        format: jpg
+      img1:
+        name: banka-ral.png
+        reduce: 0.6
+        offsetX: 60
+        offsetY: 200
+        rotate: 0
+      img2:
+        number: 2
+        reduce: 0.6
+        offsetX: 560
+        offsetY: 200
+        rotate: 90
+
+  # увеличиваем картинку с цветом
+  - name: ResizeImage
+    #skip: true
+    settings:
+      images: [ 2 ]
+      output:
+        height: 200
+        format: jpg
+
+  # очищаем все картинки модификаций
+  - name: ClearImageModification
+
+  - name: ReplaceImage
+    #skip: true
+    settings:
+      0: img/banki/banka-ral.png/{id}.jpg
+      1: img/banki/2/{id}.jpg
+
+  - name: DeleteImage
+    #skip: true
+    settings:
+      images: [ 2 ]
+
+  - name: ProductToFile
+    settings:
+      to: Storeland
+      format: csv
+      modification: true
