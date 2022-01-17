@@ -1,0 +1,22 @@
+name: scenario006
+desc: Проверка фоток и модификаций
+settings:
+  output_service: Storeland
+  output_format: csv
+  # Категорию пока вынес сюда, т.к. она нужна для директории
+  category: Paint
+  #test: true
+process:
+
+  - name: ParseToProduct
+    settings:
+      from: Storeland
+      format: csv
+      category: Paint
+      modification: true
+
+  - name: CheckImageQty
+    #skip: true
+
+  - name: CheckModQty
+    #skip: true
