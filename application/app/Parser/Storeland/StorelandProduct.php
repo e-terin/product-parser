@@ -79,6 +79,11 @@ class StorelandProduct extends AbstractParser
             foreach ($rows as $row) {
                 $product_id = $row['Идентификатор товара в магазине'] ?? null;
 
+                if (!empty($this->settings['skip_product_by_id'])
+                    && in_array($product_id, $this->settings['skip_product_by_id'])){
+                    continue;
+                }
+
                 if ($prev_product_id != $product_id) {
                     $product = new Product($row);
                     $product->addModification($row); // продукт всегда содержит как минимум одну модификацию
@@ -91,6 +96,7 @@ class StorelandProduct extends AbstractParser
 
                 // запоминаем какой товар обрабатывали
                 $prev_product_id = $product_id;
+
             }
         }
 

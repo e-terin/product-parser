@@ -94,12 +94,12 @@ class ProductStoreland extends AbstractParser
 
         $rows = $this->clearFields($rows, $this->settings['clear_fields'] ?? null);
 
-        if ($this->settings['by_brand_car'] ?? false) {
-            // преобразуем в формат, который понимает функция
-        } else {
+//        if ($this->settings['by_brand_car'] ?? false) {
+//            // преобразуем в формат, который понимает функция
+//        } else {
             $filename = $this->settings['to'] . '.' . $this->settings['format'];
             (new FilesDataProvider($this->settings['output_dir']))->saveArrayToCsv($rows, $filename);
-        }
+//        }
 
 
         return $this;
