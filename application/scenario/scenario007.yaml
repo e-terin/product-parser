@@ -1,0 +1,97 @@
+name: scenario007
+desc: Замена фото в трехслойках аэрозолях
+settings:
+  output_service: Storeland
+  output_format: csv
+  # Категорию пока вынес сюда, т.к. она нужна для директории
+  category: Paint
+  #test: true
+process:
+
+  - name: ParseToProduct
+    settings:
+      from: Storeland
+      format: csv
+      category: Paint
+      modification: true
+      skip_product_by_id: [52734947,52735191,52744740,52739918,52736449]
+
+  - name: CheckImageQty
+    skip: true
+
+  - name: CheckModQty
+    skip: true
+
+  - name: MergeImage
+    #skip: true
+    settings:
+      output:
+        width: 800
+        height: 800
+        format: jpg
+      img1:
+        name: 210.png
+        reduce: 1
+        offsetX: -100
+        offsetY: 30
+        rotate: 0
+      img2:
+        number: 16
+        reduce: 0.5
+        offsetX: 550
+        offsetY: 350
+        rotate: 90
+
+  - name: MergeImage
+    #skip: true
+    settings:
+      output:
+        width: 800
+        height: 800
+        format: jpg
+      img1:
+        name: 520.png
+        reduce: 1
+        offsetX: -100
+        offsetY: 0
+        rotate: 0
+      img2:
+        number: 16
+        reduce: 0.5
+        offsetX: 550
+        offsetY: 350
+        rotate: 90
+
+  - name: ResizeImage
+    #skip: true
+    settings:
+      images: [16]
+      output:
+        height: 200
+        format: jpg
+
+  - name: ReplaceImage
+    #skip: true
+    settings:
+      0: img/3-aerozol/210.png/{brand_car}/{id}.jpg
+      1: img/3-aerozol/520.png/{brand_car}/{id}.jpg
+      2: img/3-aerozol/color/{brand_car}/{id}.jpg
+
+  - name: DeleteImage
+    #skip: true
+    settings:
+      images: [3,4,5,6,7,8,9,10,11,12,13,14,15,16]
+
+  - name: ClearImageModification
+    #skip: true
+
+  - name: ProductToFile
+    #skip: true
+    settings:
+      # при указании здесь Product все марки будут сохранены в один файл, если указать Paint - разобьются по маркам
+      from: Product
+      to: Storeland
+      format: csv
+      modification: true
+      clear_fields: ['Изображение модификации товара']
+      by_brand_car: true
