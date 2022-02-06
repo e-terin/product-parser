@@ -1,0 +1,75 @@
+name: scenario008
+desc: Замена фото в подкрасках
+settings:
+  output_service: Storeland
+  output_format: csv
+  # Категорию пока вынес сюда, т.к. она нужна для директории
+  category: Paint
+  #test: true
+process:
+
+  # Преобразуем данные из файла Стореленда в коллекцию Product
+  - name: ParseToProduct
+    settings:
+      from: Storeland
+      format: csv
+      category: Paint
+      modification: true
+
+
+  # Проверяем картинки - везде должно быть одинаковое кол-во
+  - name: CheckImageQty
+    #skip: true
+
+  - name: MergeImage
+    #skip: true
+    settings:
+      output:
+        width: 800
+        height: 800
+        format: jpg
+      img1:
+        name: flakon.png
+        reduce: 0.9
+        offsetX: -90
+        offsetY: 40
+        rotate: 0
+      img2:
+        number: 16
+        reduce: 0.55
+        offsetX: 480
+        offsetY: 300
+        rotate: 90
+
+  - name: ResizeImage
+    skip: true
+    settings:
+      images: [16]
+      output:
+        height: 200
+        format: jpg
+
+  - name: ReplaceImage
+    skip: true
+    settings:
+      0: img/aerozol/210.png/{brand_car}/{id}.jpg
+      1: img/aerozol/520.png/{brand_car}/{id}.jpg
+      2: img/aerozol/color/{brand_car}/{id}.jpg
+
+  - name: DeleteImage
+    skip: true
+    settings:
+      images: [3,4,5,6,7,8,9,10,11,12,13,14,15,16]
+
+  - name: ClearImageModification
+    skip: true
+
+  - name: ProductToFile
+    skip: true
+    settings:
+      from: Paint
+      to: Storeland
+      format: csv
+      modification: true
+      clear_fields: ['Изображение модификации товара']
+      by_brand_car: true

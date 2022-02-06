@@ -14,7 +14,7 @@ process:
       format: csv
       category: Paint
       modification: true
-      skip_product_by_id: [52734947,52735191,52744740,52739918,52736449]
+      #skip_product_by_id: [52734947,52735191,52744740,52739918,52736449]
 
   - name: CheckImageQty
     #skip: true
