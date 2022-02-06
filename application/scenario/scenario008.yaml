@@ -16,11 +16,11 @@ process:
       category: Paint
       modification: true
 
-
   # Проверяем картинки - везде должно быть одинаковое кол-во
   - name: CheckImageQty
     #skip: true
 
+  # Склеиваем картинку флакона и цвета
   - name: MergeImage
     #skip: true
     settings:
@@ -42,30 +42,39 @@ process:
         rotate: 90
 
   - name: ResizeImage
-    skip: true
+    #skip: true
     settings:
       images: [16]
       output:
         height: 200
         format: jpg
 
+  # Меняем изображения не сгенеренные
   - name: ReplaceImage
-    skip: true
+#    skip: true
     settings:
-      0: img/aerozol/210.png/{brand_car}/{id}.jpg
-      1: img/aerozol/520.png/{brand_car}/{id}.jpg
-      2: img/aerozol/color/{brand_car}/{id}.jpg
+      0: img/podkraski/flakon.png/{brand_car}/{id}.jpg
+      2: img/podkraski/16/{brand_car}/{id}.jpg
 
+  # меняем вторую картинку на статичное изображение открытого флакона
+  - name: ReplaceImageToURL
+    #skip: true
+    settings:
+      1: "https://st.profkolor.ru/7/2774/307/flakon-s-kistochkoy.jpg"
+
+  # Убираем лишние картинки
   - name: DeleteImage
-    skip: true
+    #skip: true
     settings:
       images: [3,4,5,6,7,8,9,10,11,12,13,14,15,16]
 
+  # Очищаем картинки модификаций
   - name: ClearImageModification
-    skip: true
+    #skip: true
 
+  # Сохраняем в файл
   - name: ProductToFile
-    skip: true
+    #skip: true
     settings:
       from: Paint
       to: Storeland
