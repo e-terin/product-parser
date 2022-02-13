@@ -3,7 +3,7 @@
 namespace App\Processor;
 
 /**
- * Проверяет кол-во картинок в коллекции Product
+ * Заменяет URL картинки внутри по шаблону
  */
 class ReplaceImage extends AbstractProcessor
 {
@@ -15,9 +15,9 @@ class ReplaceImage extends AbstractProcessor
 
         $this->output->map(function($id, $product) use ($settings) {
 
-            if(!isset($product->id) || !isset($product->attributes['brand_car'])){
+            //if(!isset($product->id) || !isset($product->attributes['brand_car'])){
                 //throw new \RuntimeException('Necessary properties of product is absent: product->id or brand_car');
-            }
+            //}
 
             // change template to real product id in
             $new_images = array_map( static function ($image_template) use ($product) {

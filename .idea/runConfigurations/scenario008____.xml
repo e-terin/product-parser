@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="scenario008 замена картинок в подкрасках" type="PhpLocalRunConfigurationType" factoryName="PHP Console" singleton="false" path="$PROJECT_DIR$/application/console.php" scriptParameters="run --scenario=scenario008">
+    <method v="2" />
+  </configuration>
+</component>
