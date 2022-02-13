@@ -1,0 +1,84 @@
+name: scenario009
+desc: Замена фото в банках
+settings:
+  output_service: Storeland
+  output_format: csv
+  # Категорию пока вынес сюда, т.к. она нужна для директории
+  category: Paint
+  #test: true
+process:
+
+  # Преобразуем данные из файла Стореленда в коллекцию Product
+  - name: ParseToProduct
+    settings:
+      from: Storeland
+      format: csv
+      category: Paint
+      modification: true
+
+  # Проверяем картинки - везде должно быть одинаковое кол-во
+  - name: CheckImageQty
+    #skip: true
+
+  # Склеиваем картинку флакона и цвета
+  - name: MergeImage
+    skip: true
+    settings:
+      output:
+        width: 800
+        height: 800
+        format: jpg
+      img1:
+        name: flakon.png
+        reduce: 0.9
+        offsetX: -90
+        offsetY: 40
+        rotate: 0
+      img2:
+        number: 16
+        reduce: 0.55
+        offsetX: 480
+        offsetY: 300
+        rotate: 90
+
+  - name: ResizeImage
+    skip: true
+    settings:
+      images: [16]
+      output:
+        height: 200
+        format: jpg
+
+  # Меняем изображения не сгенеренные
+  - name: ReplaceImage
+    skip: true
+    settings:
+      0: img/podkraski/flakon.png/{brand_car}/{id}.jpg
+      2: img/podkraski/16/{brand_car}/{id}.jpg
+
+  # меняем вторую картинку на статичное изображение открытого флакона
+  - name: ReplaceImageToURL
+    skip: true
+    settings:
+      1: "https://st.profkolor.ru/7/2774/307/flakon-s-kistochkoy.jpg"
+
+  # Убираем лишние картинки
+  - name: DeleteImage
+    skip: true
+    settings:
+      images: [3,4,5,6,7,8,9,10,11,12,13,14,15,16]
+
+  # Очищаем картинки модификаций
+  - name: ClearImageModification
+    skip: true
+
+  # Сохраняем в файл
+  - name: ProductToFile
+    skip: true
+    settings:
+      from: Paint
+      to: Storeland
+      format: csv
+      modification: true
+      clear_fields: ['Изображение модификации товара']
+      by_brand_car: true
