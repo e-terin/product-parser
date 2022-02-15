@@ -18,63 +18,93 @@ process:
 
   # Проверяем картинки - везде должно быть одинаковое кол-во
   - name: CheckImageQty
-    #skip: true
+    skip: true
 
   # Склеиваем картинку флакона и цвета
   - name: MergeImage
-    skip: true
+    #skip: true
     settings:
       output:
         width: 800
         height: 800
         format: jpg
       img1:
-        name: flakon.png
-        reduce: 0.9
-        offsetX: -90
-        offsetY: 40
+        name: 05.png
+        reduce: 0.6
+        offsetX: 60
+        offsetY: 180
         rotate: 0
       img2:
-        number: 16
+        number: 3
         reduce: 0.55
-        offsetX: 480
-        offsetY: 300
+        offsetX: 580
+        offsetY: 200
         rotate: 90
 
-  - name: ResizeImage
-    skip: true
+  # Склеиваем картинку флакона и цвета
+  - name: MergeImage
+    #skip: true
     settings:
-      images: [16]
+      output:
+        width: 800
+        height: 800
+        format: jpg
+      img1:
+        name: 10.png
+        reduce: 0.85
+        offsetX: 60
+        offsetY: 60
+        rotate: 0
+      img2:
+        number: 3
+        reduce: 0.55
+        offsetX: 580
+        offsetY: 200
+        rotate: 90
+
+  - name: MergeImage
+    #skip: true
+    settings:
+      output:
+        width: 800
+        height: 800
+        format: jpg
+      img1:
+        name: 30.png
+        reduce: 0.85
+        offsetX: 40
+        offsetY: 60
+        rotate: 0
+      img2:
+        number: 3
+        reduce: 0.55
+        offsetX: 600
+        offsetY: 200
+        rotate: 90
+  - name: ResizeImage
+    #skip: true
+    settings:
+      images: [3]
       output:
         height: 200
         format: jpg
 
   # Меняем изображения не сгенеренные
   - name: ReplaceImage
-    skip: true
+    #skip: true
     settings:
-      0: img/podkraski/flakon.png/{brand_car}/{id}.jpg
-      2: img/podkraski/16/{brand_car}/{id}.jpg
-
-  # меняем вторую картинку на статичное изображение открытого флакона
-  - name: ReplaceImageToURL
-    skip: true
-    settings:
-      1: "https://st.profkolor.ru/7/2774/307/flakon-s-kistochkoy.jpg"
-
-  # Убираем лишние картинки
-  - name: DeleteImage
-    skip: true
-    settings:
-      images: [3,4,5,6,7,8,9,10,11,12,13,14,15,16]
+      0: img/banki/05.png/{brand_car}/{id}.jpg
+      1: img/banki/10.png/{brand_car}/{id}.jpg
+      2: img/banki/30.png/{brand_car}/{id}.jpg
+      3: img/banki/3/{brand_car}/{id}.jpg
 
   # Очищаем картинки модификаций
   - name: ClearImageModification
-    skip: true
+    #skip: true
 
   # Сохраняем в файл
   - name: ProductToFile
-    skip: true
+    #skip: true
     settings:
       from: Paint
       to: Storeland
