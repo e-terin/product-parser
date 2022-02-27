@@ -106,7 +106,8 @@ process:
   - name: ProductToFile
     #skip: true
     settings:
-      from: Paint
+      # для разделов указать Paint, для RAL и трехслоек - Product
+      from: Product
       to: Storeland
       format: csv
       modification: true
