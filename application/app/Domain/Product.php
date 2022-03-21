@@ -148,6 +148,15 @@ class Product
         }
     }
 
+    public function replaceModificationPrice($price_from, $price_to): void
+    {
+        foreach ($this->modifications as $index => $modification) {
+            if (isset($modification['price']) && $modification['price'] == $price_from) {
+                $this->modifications[$index]['price'] = $price_to;
+            }
+        }
+    }
+
 
 
 	public function __get($property)

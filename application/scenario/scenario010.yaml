@@ -1,0 +1,55 @@
+name: scenario010
+desc: Замена цен в аэрозолях
+settings:
+  output_service: Storeland
+  output_format: csv
+  # Категорию пока вынес сюда, т.к. она нужна для директории
+  category: Paint
+  #test: true
+process:
+
+  # Преобразуем данные из файла Стореленда в коллекцию Product
+  - name: ParseToProduct
+    settings:
+      from: Storeland
+      format: csv
+      category: Paint
+      modification: true
+
+  # Проверяем картинки - везде должно быть одинаковое кол-во
+  - name: CheckImageQty
+    skip: true
+
+  # Меняем изображения не сгенеренные
+  - name: ReplaceModificationPrice
+    #skip: true
+    settings:
+      '364,55': '430'
+      #'617,55': '672'
+      '702,65': '963'
+      '955,65': '1205'
+      '617,55': '672'
+      '870,55': '914'
+      #'955,65': '1205'
+      "1 208,65": "1447"
+      '656,65': '680'
+      '909,65': '922'
+      '994,75': '1213'
+      #'1247,75': '1164'
+      #'909,65': '922'
+      '1 162,65': '1164'
+      '1 247,75': '1455'
+      '1 500,75': '1697'
+
+
+  # Сохраняем в файл
+  - name: ProductToFile
+    #skip: true
+    settings:
+      # для разделов указать Paint, для RAL и трехслоек - Product
+      from: Paint
+      to: Storeland
+      format: csv
+      modification: true
+      #clear_fields: ['Изображение модификации товара']
+      by_brand_car: true
