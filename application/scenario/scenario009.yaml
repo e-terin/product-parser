@@ -1,0 +1,115 @@
+name: scenario009
+desc: Замена фото в банках
+settings:
+  output_service: Storeland
+  output_format: csv
+  # Категорию пока вынес сюда, т.к. она нужна для директории
+  category: Paint
+  #test: true
+process:
+
+  # Преобразуем данные из файла Стореленда в коллекцию Product
+  - name: ParseToProduct
+    settings:
+      from: Storeland
+      format: csv
+      category: Paint
+      modification: true
+
+  # Проверяем картинки - везде должно быть одинаковое кол-во
+  - name: CheckImageQty
+    skip: true
+
+  # Склеиваем картинку флакона и цвета
+  - name: MergeImage
+    #skip: true
+    settings:
+      output:
+        width: 800
+        height: 800
+        format: jpg
+      img1:
+        name: 05.png
+        reduce: 0.6
+        offsetX: 60
+        offsetY: 180
+        rotate: 0
+      img2:
+        number: 3
+        reduce: 0.55
+        offsetX: 580
+        offsetY: 200
+        rotate: 90
+
+  # Склеиваем картинку флакона и цвета
+  - name: MergeImage
+    #skip: true
+    settings:
+      output:
+        width: 800
+        height: 800
+        format: jpg
+      img1:
+        name: 10.png
+        reduce: 0.85
+        offsetX: 60
+        offsetY: 60
+        rotate: 0
+      img2:
+        number: 3
+        reduce: 0.55
+        offsetX: 580
+        offsetY: 200
+        rotate: 90
+
+  - name: MergeImage
+    #skip: true
+    settings:
+      output:
+        width: 800
+        height: 800
+        format: jpg
+      img1:
+        name: 30.png
+        reduce: 0.85
+        offsetX: 40
+        offsetY: 60
+        rotate: 0
+      img2:
+        number: 3
+        reduce: 0.55
+        offsetX: 600
+        offsetY: 200
+        rotate: 90
+  - name: ResizeImage
+    #skip: true
+    settings:
+      images: [3]
+      output:
+        height: 200
+        format: jpg
+
+  # Меняем изображения не сгенеренные
+  - name: ReplaceImage
+    #skip: true
+    settings:
+      0: img/banki/05.png/{brand_car}/{id}.jpg
+      1: img/banki/10.png/{brand_car}/{id}.jpg
+      2: img/banki/30.png/{brand_car}/{id}.jpg
+      3: img/banki/3/{brand_car}/{id}.jpg
+
+  # Очищаем картинки модификаций
+  - name: ClearImageModification
+    #skip: true
+
+  # Сохраняем в файл
+  - name: ProductToFile
+    #skip: true
+    settings:
+      # для разделов указать Paint, для RAL и трехслоек - Product
+      from: Product
+      to: Storeland
+      format: csv
+      modification: true
+      clear_fields: ['Изображение модификации товара']
+      by_brand_car: true
