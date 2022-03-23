@@ -20,9 +20,30 @@ process:
   - name: CheckImageQty
     skip: true
 
+  # Готовим картинку для заливки
+  - name: MergeImage
+    #skip: true
+    settings:
+      output:
+        width: 800
+        height: 800
+        format: jpg
+      img1:
+        name: 650.png
+        reduce: 1
+        offsetX: -100
+        offsetY: 5
+        rotate: 0
+      img2:
+        number: 2 # номер цвета по счету начиная с 0, обычно последнее фото
+        reduce: 0.5
+        offsetX: 550
+        offsetY: 350
+        rotate: 90
+
   # Меняем изображения не сгенеренные
   - name: ReplaceModificationPrice
-    #skip: true
+    skip: true
     settings:
       '364,55': '430'
       #'617,55': '672'
@@ -44,7 +65,7 @@ process:
 
   # Сохраняем в файл
   - name: ProductToFile
-    #skip: true
+    skip: true
     settings:
       # для разделов указать Paint, для RAL и трехслоек - Product
       from: Paint
