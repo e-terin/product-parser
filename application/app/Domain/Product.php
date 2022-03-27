@@ -114,6 +114,21 @@ class Product
         $this->attributes[$name] = $value;
     }
 
+    /**
+     * Добавляет картинку под указанным номером в конец массива картинок (используется для вставки новых картинок)
+     * @param $number
+     * @return void
+     */
+    public function copyImage($number): bool
+    {
+        if (isset($this->images[$number])) {
+            $this->images[] = $this->images[$number];
+            return true;
+        }
+
+        return false;
+    }
+
     public function replaceImage($number, $value): void
     {
         if (isset($this->images[$number])) {
