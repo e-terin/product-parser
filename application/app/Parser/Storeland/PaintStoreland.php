@@ -45,6 +45,18 @@ class PaintStoreland extends AbstractParser
             'Изображение модификации товара',
         ];
 
+        // Дополнительные поля
+        $field_names = [];
+        $field_headers = [];
+        if (!empty($this->settings['fields'])){
+            foreach ($this->settings['fields'] as $field_name=>$field_header){
+                $field_names[] = $field_name;
+                $field_headers[] = $field_header;
+            }
+        }
+
+        $header = array_merge($header,$field_headers);
+
         foreach ($products as $product_id => $product) {
 
             if(empty($product->attributes['brand_car'])){

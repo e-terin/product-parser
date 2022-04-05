@@ -1,0 +1,46 @@
+name: scenario011
+desc: Замена описаний в аэрозолях
+settings:
+  output_service: Storeland
+  output_format: csv
+  # Категорию пока вынес сюда, т.к. она нужна для директории
+  category: Paint
+  #test: true
+process:
+
+  # Преобразуем данные из файла Стореленда в коллекцию Product
+  - name: ParseToProduct
+    settings:
+      from: Storeland
+      format: csv
+      category: Paint
+      modification: true
+
+  # Проверяем картинки - везде должно быть одинаковое кол-во
+  - name: CheckImageQty
+    skip: true
+
+  # Меняем изображения не сгенеренные
+  - name: ReplaceDesc
+    #skip: true
+    settings:
+      new_desc: '123'
+
+  - name: DeleteModification
+    #skip: true
+    settings:
+      modifications: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15]
+
+  # Сохраняем в файл
+  - name: ProductToFile
+    #skip: true
+    settings:
+      # для разделов указать Paint, для RAL и трехслоек - Product
+      from: Paint
+      to: Storeland
+      format: csv
+      modification: true
+      clear_fields: ['Изображение модификации товара']
+      by_brand_car: true
+      fields:
+        desc: 'Полное описание товара'

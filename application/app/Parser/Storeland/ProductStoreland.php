@@ -26,10 +26,6 @@ class ProductStoreland extends AbstractParser
     public function parse(): ProductStoreland
     {
 
-       // $this->output = $this->fillProducts();
-
-        //
-
         $products = $this->params->getCollection();
 
         if ($products->isEmpty()) {
