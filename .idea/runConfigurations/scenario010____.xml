@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="scenario010 замена цен в аэрозолях" type="PhpLocalRunConfigurationType" factoryName="PHP Console" singleton="false" path="$PROJECT_DIR$/application/console.php" scriptParameters="run --scenario=scenario010">
+    <method v="2" />
+  </configuration>
+</component>
