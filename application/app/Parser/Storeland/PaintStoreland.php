@@ -78,6 +78,11 @@ class PaintStoreland extends AbstractParser
                     $properties_vector [] = $property['name'];
                     $properties_vector [] = $property['value'];
                 }
+                // прибавляем дополнительные поля
+                $additional_fields = [];
+                foreach ($field_names as $field_name){
+                    $additional_fields[] = $product->$field_name;
+                }
 
                 $rows[$product->attributes['brand_car']]['data'][] = array_merge(
                 [
@@ -90,6 +95,7 @@ class PaintStoreland extends AbstractParser
                     $product->id, // Идентификатор товара в магазине
                     $modification['image'], // Изображение модификации товара
                 ],
+                $additional_fields,
                 $properties_vector);
                 $mod_qty++;
             }

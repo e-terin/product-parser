@@ -3,7 +3,7 @@
 namespace App\Processor;
 
 /**
- * Заменяет URL картинки внутри по шаблону
+ * Заменяет Описание
  */
 class ReplaceDesc extends AbstractProcessor
 {
@@ -13,7 +13,15 @@ class ReplaceDesc extends AbstractProcessor
         $new_desc = $this->settings['new_desc'];
 
         $this->output->map(function($id, $product) use ($new_desc) {
-                $product->desc = $new_desc;
+
+            $new_desc_replace =  !empty($product->attributes['brand_car'])
+                ? str_replace(
+                    '{brand}',
+                    $product->attributes['brand_car'],
+                    $new_desc
+                    )
+                : $new_desc;
+                $product->desc = $new_desc_replace;
             return true;
         });
     }
