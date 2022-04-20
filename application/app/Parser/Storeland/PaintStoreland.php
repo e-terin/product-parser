@@ -45,6 +45,18 @@ class PaintStoreland extends AbstractParser
             'Изображение модификации товара',
         ];
 
+        // Дополнительные поля
+        $field_names = [];
+        $field_headers = [];
+        if (!empty($this->settings['fields'])){
+            foreach ($this->settings['fields'] as $field_name=>$field_header){
+                $field_names[] = $field_name;
+                $field_headers[] = $field_header;
+            }
+        }
+
+        $header = array_merge($header,$field_headers);
+
         foreach ($products as $product_id => $product) {
 
             if(empty($product->attributes['brand_car'])){
@@ -66,6 +78,11 @@ class PaintStoreland extends AbstractParser
                     $properties_vector [] = $property['name'];
                     $properties_vector [] = $property['value'];
                 }
+                // прибавляем дополнительные поля
+                $additional_fields = [];
+                foreach ($field_names as $field_name){
+                    $additional_fields[] = $product->$field_name;
+                }
 
                 $rows[$product->attributes['brand_car']]['data'][] = array_merge(
                 [
@@ -78,6 +95,7 @@ class PaintStoreland extends AbstractParser
                     $product->id, // Идентификатор товара в магазине
                     $modification['image'], // Изображение модификации товара
                 ],
+                $additional_fields,
                 $properties_vector);
                 $mod_qty++;
             }

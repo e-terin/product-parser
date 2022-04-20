@@ -146,6 +146,21 @@ class Product
         return false;
     }
 
+    public function deleteModification(array $modifications_to_delete): bool
+    {
+        if (isset($this->modifications) && is_array($this->modifications)) {
+            foreach ($this->modifications as $index => $modification){
+                if (in_array($index, $modifications_to_delete)) {
+                    unset($this->modifications[$index]);
+                }
+            }
+
+            return true;
+        }
+
+        return false;
+    }
+
     public function clearImageModification($number): bool
     {
         if (isset($this->modifications[$number]['image'])) {
@@ -184,6 +199,9 @@ class Product
 
 	public function __set($name, $value): void
 	{
+        if (isset($this->$name)){
+            $this->$name = $value;
+        }
 	}
 	public function __isset($name): bool
 	{
