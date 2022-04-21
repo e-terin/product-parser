@@ -45,7 +45,26 @@ class ProductStoreland extends AbstractParser
             'Изображение модификации товара',
         ];
 
+        // Дополнительные поля
+        $field_names = [];
+        $field_headers = [];
+        if (!empty($this->settings['fields'])){
+            foreach ($this->settings['fields'] as $field_name=>$field_header){
+                $field_names[] = $field_name;
+                $field_headers[] = $field_header;
+            }
+        }
+
+        $rows[0] = array_merge($rows[0],$field_headers);
+
         foreach ($products as $product_id => $product) {
+
+            // прибавляем дополнительные поля
+            $additional_fields = [];
+            foreach ($field_names as $field_name){
+                $additional_fields[] = $product->$field_name;
+            }
+
             $modifications = $product->modifications;
 
             // выстраиваем в ряд свойства модификаций (properties) проверяем их количество - хз надо или нет
@@ -73,6 +92,7 @@ class ProductStoreland extends AbstractParser
                     $product->id, // Идентификатор товара в магазине
                     $modification['image'], // Изображение модификации товара
                 ],
+                $additional_fields,
                 $properties_vector);
             }
 
